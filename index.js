@@ -12,7 +12,8 @@ server.listen(PORT,()=>{
     console.log('Listening on port',PORT)
 })
 const onConnection =(socket)=>{
-    console.log(socket.id)
+    console.log('hi',socket.handshake.query['name'])
+    socket.nickname = socket.handshake.query['name']
     registerUserHandler(io,socket)
 }
 io.on("connection",onConnection)

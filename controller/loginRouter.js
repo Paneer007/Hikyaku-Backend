@@ -2,8 +2,10 @@ const User = require("../model/User")
 const loginRouter= require("express").Router()
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
-
+const passport= require('passport')
+const GoogleStrategy = require('passport-google-oauth2')
 loginRouter.post('/',async(req,res)=>{
+    console.log('hi')
     const body= req.body
     console.log(body)
     const user = await User.findOne({Name:body.Name})
@@ -20,5 +22,6 @@ loginRouter.post('/',async(req,res)=>{
     res.cookie('jwt',jwtToken,{httpOnly:true})
     return res.status(200).send({jwtToken:jwtToken})
 })
+loginRouter.get('/passport/google',passport.authenticate('google'))
 
 module.exports = loginRouter

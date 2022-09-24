@@ -15,7 +15,7 @@ groupRouter.get('/:id',validateCredentials, async(req,res)=>{
     try{
         await group.populate('Messages')
     }catch(e){
-        console.log(e)
+        console.log('error with old schema')
     }
     return res.status(200).send(group)
 })
@@ -27,7 +27,9 @@ groupRouter.post('/newgroup',validateCredentials,async(req,res)=>{
         Name:data.group,
         Description:data.description,
         RoomId:uuidv4(),
-        Members:[tokenBody.id]
+        Admin:tokenBody.id,
+        Members:[tokenBody.id],
+        Messages:[]
     })
     await newGroup.save()
     let currentUser = await User.findById(tokenBody.id)
