@@ -12,11 +12,11 @@ groupRouter.get('/:id',validateCredentials, async(req,res)=>{
         return res.status(400).send({message:"unauthorised access"})
     }
     await group.populate('Members')
-    try{
-        await group.populate('Messages')
-    }catch(e){
-        console.log('error with old schema')
-    }
+    // try{
+    //     await group.populate('Messages')
+    // }catch(e){
+    //     console.log('error with old schema')
+    // }
     return res.status(200).send(group)
 })
 groupRouter.post('/newgroup',validateCredentials,async(req,res)=>{

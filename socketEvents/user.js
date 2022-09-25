@@ -1,17 +1,24 @@
 const Group = require('../model/Group')
 const User = require('../model/User')
 const listOfUser=[]
+const printOutTheUsers=async(room,io)=>{
+    //console.log(room)
+    const sockets =  await io.in(room).fetchSockets();
+    //console.log(sockets)
+    sockets.forEach(x=>{
+        console.log("hello pa",x.nickname)
+    })
+}
 module.exports = (io, socket) => {
-    socket.on("send-message",(message)=>{
-        console.log(message)
-        socket.emit("sent-message",message)
+    socket.on("sendMessage",(messageBody)=>{
+        console.log(messageBody)
+        console.log("message is sent")
+        printOutTheUsers(messageBody.room,io)
+        socket.in(messageBody.room).emit("sentMessage",messageBody.message)
+        //socket.emit("sentMessage",message)
     } );
-    socket.on("join-room",async(room)=>{
+    socket.on("joinRoom",async(room)=>{
         console.log(room)
-        //socket.join(room)
-        const sockets = await io.in(room).fetchSockets();
-        sockets.forEach(x=>{
-            console.log(x.nickname)
-        })
+        socket.join(room)
     })
 }
