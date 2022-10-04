@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const HashSchema = new mongoose.Schema({
-    hash:String,
+    HashStuff:String,
     userID:{
         type:mongoose.Types.ObjectId,
         ref:"User"

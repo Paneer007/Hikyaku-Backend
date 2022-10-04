@@ -116,6 +116,9 @@ loginRouter.post('/',async(req,res)=>{
     if(user==undefined){
         return res.status(400).send({error:"user has not made an account"})
     }
+    if(!user.Active){
+        return res.status(400).send({error:"user has not verified his account"})
+    }
     const passValid = bcrypt.compare(body.Password,user.Password)
     if(!passValid){
         return res.status(400).send({message:"error user not found"})
