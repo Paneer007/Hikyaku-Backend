@@ -5,7 +5,7 @@ const PORT = process.env.PORT||3001
 const registerUserHandler = require('./socketEvents/user')
 const io = require("socket.io")(server,{
     cors:{
-        origin:'*'
+        origin:'*' 
     }
 })
 server.listen(PORT,()=>{

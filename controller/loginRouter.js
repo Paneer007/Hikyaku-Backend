@@ -110,7 +110,6 @@ loginRouter.get('/oauth2/redirect/google',passport.authenticate('google') ,async
     return res.redirect(`http://localhost:3000?personalToken=${req.user}`)
 })
 loginRouter.post('/',async(req,res)=>{
-    console.log('hi')
     const body= req.body
     console.log(body)
     const user = await User.findOne({Name:body.Name})

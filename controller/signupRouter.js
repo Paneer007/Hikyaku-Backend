@@ -2,7 +2,6 @@ const signupRouter = require("express").Router()
 const User = require("../model/User")
 const bcrypt = require("bcrypt")
 signupRouter.post("/",async(req,res)=>{
-    console.log('hi')
     const body = req.body
     console.log(body)
     const listOfUser = await User.findOne({Name:body.Name})

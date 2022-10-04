@@ -3,6 +3,9 @@ const GroupSchema = new mongoose.Schema({
     Name:String,
     Description:String,
     RoomId:String,
+    LastMessage:{
+        type:mongoose.SchemaTypes.Mixed
+    },
     Admin:{
         type:mongoose.Types.ObjectId,
         ref:"User"

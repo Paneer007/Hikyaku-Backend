@@ -1,9 +1,15 @@
 const mongoose= require("mongoose")
 const MessageSchema = new mongoose.Schema({
-    Content:String,
-    Sender:{
+    message:String,
+    name:String,
+    group:{
+        type:mongoose.Types.ObjectId,
+        ref:"Group",
+
+    },
+    sender:{
         ref:"User",
-        Type:mongoose.Types.ObjectId
+        type:mongoose.Types.ObjectId
     }
 })
 module.exports = mongoose.model("Message",MessageSchema)

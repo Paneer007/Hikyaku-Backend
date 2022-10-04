@@ -3,6 +3,11 @@ const UserSchema = new mongoose.Schema({
     Name:String,
     Password:String,
     Bio:String,
+    Active:{
+        type: Boolean,
+        enum:[false,true],
+        default:false
+    },
     Groups:[
         {
             type:mongoose.Types.ObjectId,
