@@ -22,11 +22,11 @@ groupRouter.get('/:id',validateCredentials, async(req,res)=>{
 groupRouter.post('/newgroup',validateCredentials,async(req,res)=>{
     let data = req.body
     let tokenBody = res.locals.token
-    console.log(tokenBody)
     let newGroup = new Group({
         Name:data.group,
         Description:data.description,
         RoomId:uuidv4(),
+        generalId:uuidv4(),
         Admin:tokenBody.id,
         Members:[tokenBody.id],
         Messages:[]

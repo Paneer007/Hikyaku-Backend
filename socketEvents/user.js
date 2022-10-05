@@ -14,15 +14,12 @@ module.exports = (io, socket) => {
     socket.on("sendMessage",async(messageBody)=>{
         console.log(messageBody)
         console.log("message is sent")
-        //printOutTheUsers(messageBody.room,io)
-        //socket.in(messageBody.room).emit("sentMessage",me ssageBody.message) 
         const group = await Group.findOne({RoomId:messageBody.room}) 
         const newMessage = new Message({message:messageBody.message,sender:messageBody.user,group:group._id,name:messageBody.name})
         await newMessage.save();
         group.Messages= [...group.Messages,newMessage._id] 
         group.LastMessage={name:messageBody.name,message:messageBody.message}
         await group.save()
-
         io.to(messageBody.room).emit("sentMessage",{name:messageBody.name,message:messageBody.message})
 
     } ); 
@@ -33,7 +30,6 @@ module.exports = (io, socket) => {
         io.to(details.room).emit("whoTyped",{name:details.name})
     })
     socket.on("noMessageSent",async(details)=>{
-        console.log('im here')
         io.to(details.room).emit("whoTyped",{name:"urmo"})
     })
 }

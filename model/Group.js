@@ -3,6 +3,7 @@ const GroupSchema = new mongoose.Schema({
     Name:String,
     Description:String,
     RoomId:String,
+    GeneralId:String,
     LastMessage:{
         type:mongoose.SchemaTypes.Mixed
     },
