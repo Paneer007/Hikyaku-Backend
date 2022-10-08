@@ -4,6 +4,7 @@ const GroupSchema = new mongoose.Schema({
     Description:String,
     RoomId:String,
     GeneralId:String,
+    LastMessageSender:String,
     LastMessage:{
         type:mongoose.SchemaTypes.Mixed
     },

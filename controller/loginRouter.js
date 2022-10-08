@@ -112,7 +112,7 @@ loginRouter.get('/oauth2/redirect/google',passport.authenticate('google') ,async
 loginRouter.post('/',async(req,res)=>{
     const body= req.body
     console.log(body)
-    const user = await User.findOne({Name:body.Name})
+    const user = await User.findOne({Email:body.Email})
     if(user==undefined){
         return res.status(400).send({error:"user has not made an account"})
     }
@@ -123,7 +123,7 @@ loginRouter.post('/',async(req,res)=>{
     if(!passValid){
         return res.status(400).send({message:"error user not found"})
     }
-    const tokenBody = {id:user._id,username:body.Name}
+    const tokenBody = {id:user._id,Email:body.Email}
     const jwtToken = jwt.sign(tokenBody,process.env.SECRET)
     await user.save()
     res.cookie('jwt',jwtToken,{httpOnly:true})

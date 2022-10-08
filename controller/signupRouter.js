@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt")
 const crypto = require('crypto')
 const sendLoginMail = require('../utils/nodemailer')
 const emailValidator = require('email-validator')
+
 signupRouter.get('/verify/:id',async(req,res)=>{
     console.log('started')
     const hashId = req.params['id'];
@@ -20,20 +21,21 @@ signupRouter.get('/verify/:id',async(req,res)=>{
     console.log('done')
     return res.status(200).send({message:"Account is found"})
 })
+
 signupRouter.post("/",async(req,res)=>{
     const body = req.body
     let result = emailValidator.validate(body.Email)
     if(!result){
         return res.status(400).send({error:"send valid email"})
     }
-    const listOfUser = await User.findOne({Name:body.Name})
+    const listOfUser = await User.findOne({Email:body.Email})
     if(listOfUser){
-        return res.status(400).send({error:"username is already taken"})
+        return res.status(400).send({error:"Email is already taken"})
     }
     const saltRound = 10
     const passHash = await bcrypt.hash(body.Password,saltRound)
     const newUser = new User({
-        Name:body.Name,
+        Email:body.Email,
         Password:passHash
     })
     await newUser.save()
@@ -46,4 +48,5 @@ signupRouter.post("/",async(req,res)=>{
     sendLoginMail(body.Email,hashid)
     return res.status(200).send({message:"signed up"})
 })
+
 module.exports = signupRouter

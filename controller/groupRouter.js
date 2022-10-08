@@ -26,7 +26,7 @@ groupRouter.post('/newgroup',validateCredentials,async(req,res)=>{
         Name:data.group,
         Description:data.description,
         RoomId:uuidv4(),
-        generalId:uuidv4(),
+        GeneralId:uuidv4(),
         Admin:tokenBody.id,
         Members:[tokenBody.id],
         Messages:[]
@@ -36,7 +36,7 @@ groupRouter.post('/newgroup',validateCredentials,async(req,res)=>{
     currentUser.Groups= [...currentUser.Groups,newGroup._id];
     currentUser.save();
     console.log('im done')
-    return res.status(200).send({message:"everything is sent"})
+    return res.status(200).send(newGroup)
 })
 groupRouter.post("/joingroup",validateCredentials,async(req,res)=>{
     let data = req.body;
