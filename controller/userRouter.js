@@ -5,6 +5,7 @@ const validateCredentials= require('../middleware/validateCredentials')
 userRouter.get('/',validateCredentials,async(req,res)=>{
     let id = res.locals.token.id
     const user = await User.findById(id).populate("Groups")
+    console.log("the user data is found is being updated")
     return res.status(200).send(user);
 })
 

@@ -3,6 +3,7 @@ const validateCredentials = require('../middleware/validateCredentials')
 const Group = require('../model/Group')
 const User = require('../model/User')
 const { v4: uuidv4 } = require('uuid');
+const { Socket } = require('socket.io');
 groupRouter.get('/:id',validateCredentials, async(req,res)=>{
     let id = req.params.id
     const tokenBody = res.locals.token
@@ -33,8 +34,9 @@ groupRouter.post('/newgroup',validateCredentials,async(req,res)=>{
     })
     await newGroup.save()
     let currentUser = await User.findById(tokenBody.id)
+    console.log("the current user is ",currentUser)
     currentUser.Groups= [...currentUser.Groups,newGroup._id];
-    currentUser.save();
+    await currentUser.save();
     console.log('im done')
     return res.status(200).send(newGroup)
 })
